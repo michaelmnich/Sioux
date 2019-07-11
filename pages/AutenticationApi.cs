@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ManagingWebSerwer.Conections;
-using ManagingWebSerwer.dao;
+using AutenticationEngine.Comon;
 
 namespace ManagingWebSerwer.pages
 {
-
-
-    class MainPage : Page
+    public class AutenticationApi : Page
     {
         string PageContent;
         private string _helper = "";
@@ -24,9 +20,9 @@ namespace ManagingWebSerwer.pages
         private Dictionary<string, Cookie> _Cookie_params;
         private PagesWorker _pagesWorker;
 
-        public MainPage(PagesWorker pagesWorker)
+        public AutenticationApi(PagesWorker pagesWorker)
         {
-            _Get_params= new Dictionary<string, string>();
+            _Get_params = new Dictionary<string, string>();
             _Set_params = new Dictionary<string, string>();
             _Cookie_params = new Dictionary<string, Cookie>();
             _pagesWorker = pagesWorker;
@@ -34,14 +30,14 @@ namespace ManagingWebSerwer.pages
 
 
 
-        public string GetContent( )
+        public string GetContent()
         {
-            string toRet = "<table><tr><td>aaa</td>bbb<td></td></tr><tr><td>aaa</td>bbb<td></td></tr></table>";
+            string toRet = AutenticationResponces.Unknown();
             Cookie cook01 = new Cookie("testCockie", "zielony kapturek");
 
             _pagesWorker.Context.Response.AppendCookie(cook01);
 
-            string cockie ="";
+            string cockie = "";
 
             if (_Cookie_params.ContainsKey("testCockie"))
             {
@@ -49,9 +45,14 @@ namespace ManagingWebSerwer.pages
             }
 
 
-
-            if (_Get_params.ContainsKey("info"))
+            //wysylamy uzytkownika i haslo szyfr posolony akualny czas co do dnia. 
+            if (_Get_params.ContainsKey("user"))
             {
+                if (_Get_params.ContainsKey("pass"))
+                {
+                    //Jesli poprawne generuj tokena
+                    toRet = AutenticationResponces.LoginCorrect("somehash");
+                }
             }
 
 

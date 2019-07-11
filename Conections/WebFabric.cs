@@ -11,18 +11,23 @@ using ManagingWebSerwer.pages;
 
 namespace ManagingWebSerwer.Conections
 {
-    class WebFabric
+   public class WebFabric
     {
         private WebServer _hhtpSerwer;
-        private PagesWorker PagesWoeker;
+        public PagesWorker PagesWoeker { get; private set; }
         private HttpReqestWorker _http_reqestWorker;
-        private TcpSerwer My_tcpSerwer;
         public WebFabric()
         {//
-            My_tcpSerwer = new TcpSerwer();
-            PagesWoeker = new PagesWorker(My_tcpSerwer);
+          
+            PagesWoeker = new PagesWorker();
 
         }
+
+        public void AddPage(string url, Page p)
+        {
+            PagesWoeker.AddPage(url, p);
+        }
+
 
         //_______________________________________________________________________________________________________________________________________________________
         //HTTP SECTION-------------------------------------------------------------------------------------------------------------------------------------------

@@ -17,21 +17,25 @@ namespace ManagingWebSerwer.pages
     /// <summary>
     ///  Fabryka obslugujaca wszytkie storny
     /// </summary>
-    class PagesWorker     {
+    public class PagesWorker     {
         private Page P_main;
         private Dictionary<string, Page> _pages;
         private Dictionary<string, string> _postParams;
         private Dictionary<string, string> _getParams;
         private Dictionary<string, Cookie> _coockiesParams;
-        public TcpSerwer TcpMessagePropagator;
+
         public HttpListenerContext Context { get; private set; }
-        public PagesWorker(TcpSerwer tcpSerwer)
+        public PagesWorker()
         {
-            TcpMessagePropagator = tcpSerwer;
             P_main  = new MainPage(this);
             _pages = new Dictionary<string, Page>();
             _pages.Add("/index/",P_main);
 
+        }
+
+        public void AddPage(string url, Page p)
+        {
+            _pages.Add("/" + url + "/", p);
         }
 
         public static void ShowRequestProperties2(HttpListenerRequest request)
