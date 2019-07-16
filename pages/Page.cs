@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManagingWebSerwer.pages
 {
-    interface Page
+    public interface Page
     {
        string GetContent();
 

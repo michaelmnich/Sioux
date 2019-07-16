@@ -15,23 +15,51 @@ namespace ManagingWebSerwer.pages
 
 
     /// <summary>
-    ///  Fabryka obslugujaca wszytkie storny
+    ///  Fabric for Web pages, Contain TCp ip serwer that can be manage from pages. 
+    ///  INFO: Intresting methods TcpSerwer ->  Client_MessageReceived  & SendMessage_to_Client
+    ///         
     /// </summary>
-    class PagesWorker     {
+    public class PagesWorker
+    {
         private Page P_main;
         private Dictionary<string, Page> _pages;
         private Dictionary<string, string> _postParams;
         private Dictionary<string, string> _getParams;
         private Dictionary<string, Cookie> _coockiesParams;
-        public TcpSerwer TcpMessagePropagator;
-        public HttpListenerContext Context { get; private set; }
-        public PagesWorker(TcpSerwer tcpSerwer)
-        {
-            TcpMessagePropagator = tcpSerwer;
-            P_main  = new MainPage(this);
-            _pages = new Dictionary<string, Page>();
-            _pages.Add("/index/",P_main);
+        TcpSerwer TcpSerwer; 
 
+
+        public HttpListenerContext Context { get; private set; }
+        public PagesWorker(TcpSerwer tcp)
+        {
+            TcpSerwer = tcp;
+            P_main = new MainPage(this);
+            _pages = new Dictionary<string, Page>();
+            _pages.Add("/", P_main);
+
+        }
+
+     
+
+        #region TCP ===================================================
+        public void SendTcpIp(string url, Page p)
+        {
+            TcpSerwer.SendMessage_to_Client("message", "ClientName");
+        }
+
+        public List<string> GetTcpLogs()
+        {
+            return TcpSerwer.Logs;
+        }
+        public string GetClientStatus(string clientName)
+        {
+            return TcpSerwer.GetStatus(clientName);
+        }
+        #endregion
+
+        public void AddPage(string url, Page p)
+        {
+            _pages.Add("/" + url + "/", p);
         }
 
         public static void ShowRequestProperties2(HttpListenerRequest request)
@@ -51,7 +79,7 @@ namespace ManagingWebSerwer.pages
 
         }
 
-        public string  ReturnPageContent(HttpListenerContext ctx)
+        public string ReturnPageContent(HttpListenerContext ctx)
         {
             Context = ctx;
             ShowRequestProperties2(ctx.Request);
@@ -69,7 +97,6 @@ namespace ManagingWebSerwer.pages
             string url_AbsolutePath = request.Url.AbsolutePath;
             if (_pages.ContainsKey(url_AbsolutePath))
             {
-                //po znalezienu strony trzeba ja wyczyscic bo moze nalezec do innego uzytkownika 
                 _pages[url_AbsolutePath].Set_GET_Params(_getParams);
                 _pages[url_AbsolutePath].Set_SET_Params(_postParams);
                 _pages[url_AbsolutePath].Set_Cockie_Params(_coockiesParams);
@@ -77,26 +104,26 @@ namespace ManagingWebSerwer.pages
 
                 Defoult_page = _pages[url_AbsolutePath].GetContent();
             }
-            return Defoult_page;     
+            return Defoult_page;
         }
 
         /// <summary>
-        ///     Metoda tworzaca dictionary z wszytkuch paremtrów get 
+        ///    That Mehod Creates Dictionary from all -> Cockies
         /// </summary>
         /// <param name="requestQueryString"></param>
         /// <returns></returns>
         Dictionary<string, Cookie> CockiesDataParser(CookieCollection requestCookies)
-         {
+        {
             Dictionary<string, Cookie> query_pairs = new Dictionary<string, Cookie>();
-             foreach (Cookie cookie in requestCookies)
-             {
-                 query_pairs.Add(cookie.Name, cookie);
-             }
+            foreach (Cookie cookie in requestCookies)
+            {
+                query_pairs.Add(cookie.Name, cookie);
+            }
             return query_pairs;
         }
 
         /// <summary>
-        ///     Metoda tworzaca dictionary z wszytkuch paremtrów get 
+        ///    That Mehod Creates Dictionary from all -> Get
         /// </summary>
         /// <param name="requestQueryString"></param>
         /// <returns></returns>
@@ -110,7 +137,7 @@ namespace ManagingWebSerwer.pages
             return query_pairs;
         }
         /// <summary>
-        ///     metoda robiaca dictionary z wszytkich parametrów set
+        ///     That Mehod Creates Dictionary from all -> Set
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
@@ -118,20 +145,21 @@ namespace ManagingWebSerwer.pages
         {
             Dictionary<string, string> query_pairs = new Dictionary<string, string>();
             string query = url;
-            if(query=="") return query_pairs;
+            if (query == "") return query_pairs;
             string[] pairs = query.Split('&');
-            foreach (string pair in pairs) {
+            foreach (string pair in pairs)
+            {
                 int idx = pair.IndexOf('=');
                 query_pairs.Add(Uri.UnescapeDataString(pair.Substring(0, idx)), Uri.UnescapeDataString(pair.Substring(idx + 1)));
             }
             return query_pairs;
         }
 
-   
 
 
 
-     
+
+
     }
 
 

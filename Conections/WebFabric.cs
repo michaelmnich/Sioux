@@ -14,7 +14,7 @@ namespace ManagingWebSerwer.Conections
     class WebFabric
     {
         private WebServer _hhtpSerwer;
-        private PagesWorker PagesWoeker;
+        public PagesWorker PagesWoeker { get; private set; }
         private HttpReqestWorker _http_reqestWorker;
         private TcpSerwer My_tcpSerwer;
         public WebFabric()
@@ -36,6 +36,13 @@ namespace ManagingWebSerwer.Conections
           //  _hhtpSerwer = new WebServer(SendResponse, "http://*:8080/");
             _hhtpSerwer.Run();
         }
+
+
+        public void AddPage(string url, Page p)
+        {
+            PagesWoeker.AddPage(url, p);
+        }
+
         /// <summary>
         /// Odbierawnie wiadomosci http
         /// </summary>

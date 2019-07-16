@@ -18,12 +18,17 @@ using ManagingWebSerwer.dao;
 
 namespace ManagingWebSerwer.Conections
 {
-    class TcpSerwer
+   public class TcpSerwer
     {
         private Dictionary<long, MyTcpClientCreditials> MyClients;
         private Dictionary<string, MyTcpClientCreditials> MyClients_byName;
+
+        private List<string> _logList;
+
+        public List<string> Logs { get { return _logList; } }
         public TcpSerwer()
         {
+            _logList = new List<string>();
             MyClients = new Dictionary<long, MyTcpClientCreditials>();
             MyClients_byName = new Dictionary<string, MyTcpClientCreditials>();
             Task t = Task.Run(() => {
@@ -87,70 +92,24 @@ namespace ManagingWebSerwer.Conections
             if (MyClients.ContainsKey(client.ClientId))
             {
                 string msg = message.Text;
-                if (msg.Contains("@reg")) //example: @reg#miner12#dsafasfasfas£
-                {
-                    string[] msg_array = msg.Split('#');
-                    if (msg_array.Length > 2)
-                    {
-                        if (!LIcenceValidate(msg_array[1], msg_array[2])) //
-                        {
-
-                            client.SendMessage(
-                                new ScsTextMessage(
-                                    "Invalid licence verufication" + System.Environment.NewLine
-                                ));
-                            Console.WriteLine("LOG: msg client: " + client.ClientId + ", msg: " + message.Text +
-                                              " Alredy Exist Error");
-                            client.Disconnect();
-                        }
-                        else
-                        {
-                            MyClients[client.ClientId].name = msg_array[1];
-                            MyClients[client.ClientId].Ip = client.RemoteEndPoint.ToString();
-                            // MyClients[client.ClientId].usserName = "user123"; //todo z bazy pobrac jak sie zaloguje koparka to sluzy do zbierania info o koparkach narazie nie uzywane 
-
-                            MyClients_byName.Add(MyClients[client.ClientId].name, MyClients[client.ClientId]);
-                            client.SendMessage(
-                                new ScsTextMessage(
-                                    "Miner: " + msg_array[1] + "Valdiation sucess" + System.Environment.NewLine
-                                ));
-                        }
-
-                    }
-                }
-                else if (msg.Contains("@stat")) //example: @stat#Eth ore Not mining
-                {
-                    string[] msg_array = msg.Split('#');
-                    if (msg_array.Length > 1)
-                    {
-                        MyClients[client.ClientId].MiningStatus = msg_array[1];
-                    }
-                    
-                }
+                Console.WriteLine("LOG: msg client: " + client.ClientId + ", msg: " + message.Text);
+                _logList.Add("LOG: msg client: " + client.ClientId + ", msg: " + message.Text);
 
             }
-
-            Console.WriteLine("LOG: msg client: " + client.ClientId + ", msg: " + message.Text);
+            Console.WriteLine("LOG: UNKNOW client msg: " + client.ClientId + ", msg: " + message.Text);
+            _logList.Add("LOG: UNKNOW  client msg: " + client.ClientId + ", msg: " + message.Text);
 
             //Send reply message to the client
 
         }
 
-        private bool LIcenceValidate(string name, string key)
-        {
-            //  string contents = File.ReadAllText(Environment.CurrentDirectory+"/keys.txt");
-            //contents.Contains(key)
-            if (MyClients_byName.ContainsKey(name)) return false;
-
-            string DatabaseKey=  Dao.Instance().GetDao().select_miner(name);
-            if (key == DatabaseKey )
-            {
-                return true;
-            }
-            return false;
-        }
 
 
+        /// <summary>
+        ///  Senging messages to connected clients
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="name"></param>
         public void SendMessage_to_Client(string s, string name)
         {
             //byte[] bytes = Encoding.ASCII.GetBytes(s);
@@ -166,34 +125,21 @@ namespace ManagingWebSerwer.Conections
 
         }
 
-
+        /// <summary>
+        ///     Return status of courent client
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public string GetStatus(string name)
         {
             if (MyClients_byName.ContainsKey(name))
             {
-                return "Online;"+ MyClients_byName[name].MiningStatus;
+                return "Online;";
             }
             return "Offline";
         }
 
-        public string UpdateMiners()
-        {
-            string toreturn = "Aktualzicaja:<br>";
-            string s =  "@<data>" +
-                         " <StartMining>" +
-                         "   <Curency>UPDATE</Curency>" +
-                         " </StartMining>" +
-                         "</data>";
-            foreach (MyTcpClientCreditials clientCreditials in MyClients_byName.Values)
-            {
-                clientCreditials.client.SendMessage(
-                    new ScsTextMessage(
-                        s + System.Environment.NewLine
-                    ));
-                toreturn += "Aktualizacja: " + clientCreditials.name + "<br>";
-            }
-            return toreturn;
-        }
+      
     }
 
     internal class MyWireProtocolFactory : IScsWireProtocolFactory
@@ -228,9 +174,7 @@ namespace ManagingWebSerwer.Conections
     {
         public string Ip { get; set; }
         public string name { get; set; }
-        public long KeyId { get; set; } //will be used to store licence key to check if it is not used twice
         public IScsServerClient client { get; set; }
-       // public string usserName { get; set; }
-        public string MiningStatus { get; set; }
+      
     }
 }

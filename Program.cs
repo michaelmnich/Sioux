@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ManagingWebSerwer.Conections;
 using System.Threading;
+using ManagingWebSerwer.pages.Test;
 
 namespace ManagingWebSerwer
 {
@@ -18,7 +19,8 @@ namespace ManagingWebSerwer
 
             WebFabric webFabric = new WebFabric();
             webFabric.MakeHttpSerwer();
-
+            Test testPage = new Test(webFabric.PagesWoeker);
+            webFabric.AddPage("test", testPage);
 
             Thread.Sleep(1000);
             Console.WriteLine("----------------------------------");
@@ -31,7 +33,7 @@ namespace ManagingWebSerwer
             Console.Write("\nPress any key to continue... ");
 
             Console.WriteLine("");
-            Console.WriteLine("----------------------------------"); //
+            Console.WriteLine("----------------------------------"); //dsa
             Console.WriteLine("");
 
             String consoleInnput = "";
@@ -42,4 +44,8 @@ namespace ManagingWebSerwer
             webFabric.StopHttpSerwer();
         }
     }
+
+
+
+
 }
