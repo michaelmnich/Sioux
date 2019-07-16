@@ -9,10 +9,10 @@ namespace ManagingWebSerwer.pages
 {
     public interface Page
     {
-       string GetContent();
+        string GetContent();
 
-        void Set_GET_Params(Dictionary<string,string> Get_params);
-        void Set_SET_Params(Dictionary<string,string> Set_params);
+        void Set_GET_Params(Dictionary<string, string> Get_params);
+        void Set_SET_Params(Dictionary<string, string> Set_params);
         void Set_Cockie_Params(Dictionary<string, Cookie> Cockie_params);
     }
 }

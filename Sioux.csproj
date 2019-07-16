@@ -61,12 +61,12 @@
   <ItemGroup>
     <Compile Include="Conections\HttpReqestWorker.cs" />
     <Compile Include="Conections\Seciouryty.cs" />
-    <Compile Include="Conections\TcpSerwer.cs" />
     <Compile Include="Conections\WebServer.cs" />
     <Compile Include="Conections\WebFabric.cs" />
     <Compile Include="dao\Dao.cs" />
     <Compile Include="dao\MySqlDao.cs" />
     <Compile Include="dao\IDao.cs" />
+    <Compile Include="pages\AutenticationApi.cs" />
     <Compile Include="pages\MainPage.cs" />
     <Compile Include="pages\Page.cs" />
     <Compile Include="pages\PagesWorker.cs" />
@@ -82,6 +82,10 @@
     <Content Include="Changes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutenticationEngine\AutenticationEngine.csproj">
+      <Project>{8d028131-d76f-4947-b4a2-0c5a37dd9f22}</Project>
+      <Name>AutenticationEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="SCS\Scs\Scs.csproj">
       <Project>{0dc81b09-3abf-4bb3-8c08-4e8ee4432bdc}</Project>
       <Name>Scs</Name>
