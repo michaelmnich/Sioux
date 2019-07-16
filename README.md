@@ -32,7 +32,7 @@ Main page
 **Test**
 Guide page for tests
 
-Adding new page is described in class **Program**:
+Adding new page is described in class "Program":
 ```
 
   Test testPage = new Test(webFabric.PagesWoeker);
