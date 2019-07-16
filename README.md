@@ -26,7 +26,7 @@ Class maintain pages activities like cookies, Get, set etc.
 **Page**
 Interface for all pages
 
-**MainPage"**
+**MainPage**
 Main page 
 
 **Test**
