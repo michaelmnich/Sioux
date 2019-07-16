@@ -16,17 +16,15 @@ namespace ManagingWebSerwer.Conections
         private WebServer _hhtpSerwer;
         public PagesWorker PagesWoeker { get; private set; }
         private HttpReqestWorker _http_reqestWorker;
+        private ManagingWebSerwer.Conections.TcpSerwer TcpSerwer;
         public WebFabric()
         {//
           
-            PagesWoeker = new PagesWorker();
+            PagesWoeker = new PagesWorker(TcpSerwer);
 
         }
 
-        public void AddPage(string url, Page p)
-        {
-            PagesWoeker.AddPage(url, p);
-        }
+
 
 
         //_______________________________________________________________________________________________________________________________________________________
