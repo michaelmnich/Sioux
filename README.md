@@ -44,6 +44,9 @@ webFabric.AddPage("test", testPage);
 **BasePage**
 Abstrac page class. All pages should extend that.
 
+
+### External pages:
+
 If you whnt to add costum page to project without recompilation
 Create class that extends **BasePage**.
 
