@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/michaelmnich/Sioux/Main/img/repo.jpg)
+![](https://raw.githubusercontent.com/michaelmnich/Sioux/Main/Sioux/img/repo.jpg)
 
 
 ### **Sioux:**
