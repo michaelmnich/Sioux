@@ -1,4 +1,5 @@
-﻿using SiouxComon;
+﻿using ManagingWebSerwer.pages;
+using SiouxComon;
 using SiouxComon.FrameworkExtensions;
 using System;
 using System.CodeDom.Compiler;
@@ -16,7 +17,7 @@ using System.Windows.Forms.Design;
 
 namespace ManagingWebSerwer.Compilation
 {
-    class Compiler : ICompiler
+   public class Compiler : ICompiler
     {
         private static readonly LogWriter Log = new LogWriter();
         private const string TempDcriptdll = "TempScriptDll";
@@ -61,7 +62,7 @@ namespace ManagingWebSerwer.Compilation
         {
             try
             {
-                IEnumerable<Type> typeName = asemblyConector.GetTypes().Where(e => e.BaseType == (typeof(BaseScript)));
+                IEnumerable<Type> typeName = asemblyConector.GetTypes().Where(e => e.BaseType == (typeof(BasePage)));
                 if (typeName.Count() > 0) return Activator.CreateInstance(typeName.First());
                 else return null;
             }
@@ -80,7 +81,7 @@ namespace ManagingWebSerwer.Compilation
         {
             try
             {
-                return AsemblyConector.GetTypes().First(e => e.BaseType == (typeof(BaseScript)));
+                return AsemblyConector.GetTypes().First(e => e.BaseType == (typeof(BasePage)));
             }
             catch (Exception e)
             {

@@ -8,12 +8,15 @@ namespace SiouxComon
     {
         public void Error(string v)
         {
-            throw new NotImplementedException();
+            var colorConsole =  Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ERROR: "+v);
+            Console.ForegroundColor = colorConsole;
         }
 
         public void Info(string v)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(v);
         }
     }
 }

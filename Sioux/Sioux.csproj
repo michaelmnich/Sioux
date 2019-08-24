@@ -65,7 +65,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compilation\BaseScript.cs" />
     <Compile Include="Compilation\Compiler.cs" />
     <Compile Include="Compilation\CompilerException.cs" />
     <Compile Include="Compilation\ICompiler.cs" />
@@ -76,9 +75,12 @@
     <Compile Include="Conections\WebFabric.cs" />
     <Compile Include="dao\Dao.cs" />
     <Compile Include="dao\IDao.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="pages\BasePage.cs" />
     <Compile Include="pages\MainPage.cs" />
     <Compile Include="pages\Page.cs" />
     <Compile Include="pages\PagesWorker.cs" />
+    <Compile Include="pages\Test\SamplePageToCompile.cs" />
     <Compile Include="pages\Test\Test.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

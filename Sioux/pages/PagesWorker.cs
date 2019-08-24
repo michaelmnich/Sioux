@@ -33,7 +33,8 @@ namespace ManagingWebSerwer.pages
         public PagesWorker(TcpSerwer tcp)
         {
             TcpSerwer = tcp;
-            P_main = new MainPage(this);
+            P_main = new MainPage();
+            P_main.Init(this);
             _pages = new Dictionary<string, Page>();
             _pages.Add("/", P_main);
 

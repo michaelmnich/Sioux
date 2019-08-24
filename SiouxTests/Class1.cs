@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagingWebSerwer.Compilation
+namespace Sioux.tests
 {
-    public abstract class BaseScript
+    public class Class1
     {
-
     }
 }
