@@ -6,20 +6,28 @@ using System.Threading.Tasks;
 
 namespace ManagingWebSerwer.dao
 {
+
+    /// <summary>
+    ///  Dao singleton/Fabric If you whant to add new Dao impelment Idao Interface and use it heare. 
+    /// </summary>
     class Dao
     {
 
         private static Dao instacne;
-        private MySqlDao _dao01_test;
+       
 
         private Dao()
         {
-            _dao01_test = new MySqlDao();
+          //  _dao01_test = new MySqlDao();
         }
 
+        /// <summary>
+        ///  Dao return method. 
+        /// </summary>
+        /// <returns></returns>
         public Idao GetDao()
         {
-            return _dao01_test;
+            return null;
         }
 
         public static Dao Instance()

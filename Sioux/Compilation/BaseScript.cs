@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagingWebSerwer.dao
+namespace ManagingWebSerwer.Compilation
 {
-    interface Idao
+    public abstract class BaseScript
     {
-        string select_miner(string name);
+
     }
 }
