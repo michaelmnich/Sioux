@@ -34,9 +34,13 @@ namespace ManagingWebSerwer.Conections
         public void MakeHttpSerwer()
         {
             _http_reqestWorker = new HttpReqestWorker();
-            //_hhtpSerwer = new WebServer(SendResponse, "http://192.168.1.120:8080/");
-            _hhtpSerwer = new WebServer(SendResponse, "http://localhost:8080/");
-          //  _hhtpSerwer = new WebServer(SendResponse, "http://*:8080/");
+           // _hhtpSerwer = new WebServer(SendResponse, "http://192.168.0.150:80/");
+         //   _hhtpSerwer = new WebServer(SendResponse, "http://89.70.220.2:80/");
+            _hhtpSerwer = new WebServer(SendResponse, "http://+:80/");
+
+        
+            //_hhtpSerwer = new WebServer(SendResponse, "http://localhost:80/");
+            //  _hhtpSerwer = new WebServer(SendResponse, "http://*:80/");
             _hhtpSerwer.Run();
         }
 

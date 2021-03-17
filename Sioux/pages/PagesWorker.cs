@@ -26,8 +26,9 @@ namespace ManagingWebSerwer.pages
         private Dictionary<string, string> _postParams;
         private Dictionary<string, string> _getParams;
         private Dictionary<string, Cookie> _coockiesParams;
-        TcpSerwer TcpSerwer; 
+        TcpSerwer TcpSerwer;
 
+        private bool mainPageFound;
 
         public HttpListenerContext Context { get; private set; }
         public PagesWorker(TcpSerwer tcp)
@@ -37,6 +38,8 @@ namespace ManagingWebSerwer.pages
             P_main.Init(this);
             _pages = new Dictionary<string, Page>();
             _pages.Add("/", P_main);
+            _pages.Add("/about/", P_main);
+            _pages.Add("/about", P_main);
 
         }
 
@@ -60,7 +63,16 @@ namespace ManagingWebSerwer.pages
 
         public void AddPage(string url, Page p)
         {
-            _pages.Add("/" + url + "/", p);
+           
+            if (url.Equals("main"))
+            {
+                _pages["/"] = p;
+            }
+            else
+            {
+                _pages.Add("/" + url + "/", p);
+                _pages.Add("/" + url + "", p);
+            }
         }
 
         public static void ShowRequestProperties2(HttpListenerRequest request)
